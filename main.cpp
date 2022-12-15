@@ -2,6 +2,8 @@
 #include "graph.h"
 #include <algorithm>
 
+#include "maze.h"
+
 void print_path(const std::vector<Graph::vertex>& path)
 {
     for (const auto& vertex: path)
@@ -24,15 +26,19 @@ double path_length(const Graph& g, const std::vector<Graph::vertex>& path)
 
 int main()
 {
+    /*Graph g({
+            {-1, 1, 1, -1},
+            {1, -1, -1, 1},
+            {-1, -1, -1, 1},
+            {-1, -1, 1, -1}
+    });*/
 
-    Graph g({
-            {-1, 5, 5, 5},
-            {-1, -1, -1, 5},
-            {5, 5, -1, -1},
-            {-1, -1, -1, -1}
-    });
 
-    auto paths = g.get_all_paths(2, 3);
+    Maze g(3);
+    std::cout << "START: " << g.getStart() << " STOP: " << g.getStop() << "\n";
+
+    auto paths = g.get_all_paths(g.getStart(), g.getStop());
+    std::cout << "Jest " << paths.size() << " drog\n\n";
 
     for (const auto& path: paths)
     {

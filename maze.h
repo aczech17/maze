@@ -5,17 +5,17 @@
 #include "graph.h"
 #include "cell_array.h"
 
-class Maze :public CellArray
+class Maze :public CellArray, public Graph
 {
+    using Graph::vertex;
     size_t n;
-    Graph graph;
 
     vertex start{};
     vertex stop{};
 
     void init();
 public:
-    explicit Maze(size_t n) : n(n), CellArray(n), graph(n * n) { init(); }
+    explicit Maze(size_t n) : n(n), CellArray(n), Graph(n * n) { init(); }
     vertex getStart() const;
     vertex getStop() const;
 };

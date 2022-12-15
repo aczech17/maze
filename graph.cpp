@@ -1,6 +1,7 @@
 #include "graph.h"
 #include <algorithm>
 
+#include <iostream>
 
 Graph::Graph(size_t n)
 {
@@ -24,6 +25,7 @@ double Graph::get_weight(Graph::vertex v1, Graph::vertex v2) const
 
 void Graph::add_edge(Graph::vertex v1, Graph::vertex v2, double weight)
 {
+    //std::cout << "Dodajemy edge " << v1 << "->" << v2 << "\n";
     arr[v1][v2] = weight;
 }
 
@@ -34,6 +36,7 @@ size_t Graph::get_vertex_n() const
 
 void Graph::bfs(Graph::vertex src, Graph::vertex dest)
 {
+    //std::cout << src << "\n";
     size_t n = get_vertex_n();
     current_path.push_back(src);
     if (src == dest)
@@ -41,6 +44,7 @@ void Graph::bfs(Graph::vertex src, Graph::vertex dest)
 
     for (vertex i = 0; i < n; i++)
     {
+        //std::cout << "i = " << i << "\n";
         if (i == src)
             continue;
 

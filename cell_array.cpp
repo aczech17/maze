@@ -1,6 +1,8 @@
 #include "cell_array.h"
 #include "randomizer.h"
 
+#include <iostream>
+
 CellArray::CellArray(size_t n)
 {
     this->n = n;
@@ -11,11 +13,9 @@ CellArray::CellArray(size_t n)
         {
             bool right, down;
             double value;
-            do
-            {
-                right = randomizer.get_bool();
-                down = randomizer.get_bool();
-            }while (!right && !down);
+
+            down = true;
+            right = true;
 
             value = randomizer.get_double(0, 10);
 
@@ -25,9 +25,10 @@ CellArray::CellArray(size_t n)
 
 bool CellArray::getRight(CellArray::vertex row, CellArray::vertex col)
 {
-    if (row > 0 && row < n && col > 0 && col < n - 1)
+    if (row >= 0 && row < n && col >= 0 && col < n - 1)
     {
-        size_t index = row * n + col + 1;
+        //std::cout << "Moze nie zero\n";
+        size_t index = row * n + col;
         return cell_arr[index].right;
     }
     return false;
@@ -35,9 +36,9 @@ bool CellArray::getRight(CellArray::vertex row, CellArray::vertex col)
 
 bool CellArray::getDown(CellArray::vertex row, CellArray::vertex col)
 {
-    if (row > 0 && row < n - 1 && col > 0 && col < n)
+    if (row >= 0 && row < n - 1 && col >= 0 && col < n)
     {
-        size_t index = (row + 1) * n + col;
+        size_t index = row * n + col;
         return cell_arr[index].down;
     }
     return false;
