@@ -13,17 +13,6 @@ void print_path(const std::vector<Graph::vertex>& path)
     std::cout << "\n";
 }
 
-double path_length(const Graph& g, const std::vector<Graph::vertex>& path)
-{
-    double sum = 0;
-    for (auto i = path.begin(); i < path.end() - 1; i++)
-    {
-        sum += g.get_weight(*i, *(i + 1));
-    }
-
-    return sum;
-}
-
 int main()
 {
     /*Graph g({
@@ -35,14 +24,17 @@ int main()
 
 
     Maze g(3);
-    std::cout << "START: " << g.getStart() << " STOP: " << g.getStop() << "\n";
+    std::cout << "START: " << g.get_start() << " STOP: " << g.get_stop() << "\n";
 
-    auto paths = g.get_all_paths(g.getStart(), g.getStop());
+    auto paths = g.get_all_paths();
     std::cout << "Jest " << paths.size() << " drog\n\n";
 
     for (const auto& path: paths)
     {
-        print_path(path);
-        std::cout << path_length(g, path) << "\n\n";
+        auto vertices = path.first;
+        double length = path.second;
+
+        print_path(vertices);
+        std::cout << length << "\n\n";
     }
 }

@@ -65,12 +65,37 @@ void Maze::init()
     stop = stop_row * n + stop_col;
 }
 
-CellArray::vertex Maze::getStart() const
+CellArray::vertex Maze::get_start() const
 {
     return start;
 }
 
-CellArray::vertex Maze::getStop() const
+CellArray::vertex Maze::get_stop() const
 {
     return stop;
 }
+
+double Maze::get_path_length(std::vector<vertex> path)
+{
+    double sum = 0.0;
+    for (auto v = path.begin(); v < path.end() - 1; v++)
+    {
+        sum += get_weight(*v, *(v + 1));
+    }
+    return sum;
+}
+
+
+std::vector<std::pair<std::vector<Graph::vertex>, double>> Maze::get_all_paths()
+{
+    std::vector<std::pair<std::vector<Graph::vertex>, double>> pairs;
+
+    auto paths = Graph::get_all_paths(start, stop);
+    for (const auto& path: paths)
+    {
+        auto pair = std::make_pair(path, get_path_length(path));
+        pairs.push_back(pair);
+    }
+    return pairs;
+}
+

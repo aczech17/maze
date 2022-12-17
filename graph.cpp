@@ -5,8 +5,6 @@
 
 Graph::Graph(size_t n)
 {
-    vertex_n = n;
-
     for (vertex row = 0; row < n; row++)
     {
         std::vector<double> new_row;
@@ -25,7 +23,6 @@ double Graph::get_weight(Graph::vertex v1, Graph::vertex v2) const
 
 void Graph::add_edge(Graph::vertex v1, Graph::vertex v2, double weight)
 {
-    //std::cout << "Dodajemy edge " << v1 << "->" << v2 << "\n";
     arr[v1][v2] = weight;
 }
 
@@ -34,30 +31,21 @@ size_t Graph::get_vertex_n() const
     return arr.size();
 }
 
-void Graph::bfs(Graph::vertex src, Graph::vertex dest)
+void Graph::traverse(Graph::vertex src, Graph::vertex dest)
 {
-    //std::cout << src << "\n";
     size_t n = get_vertex_n();
     current_path.push_back(src);
     if (src == dest)
         paths.push_back(current_path);
 
-    for (vertex i = 0; i < n; i++)
-    {
-        //std::cout << "i = " << i << "\n";
-        if (i == src)
-            continue;
+    for (vertex v = 0; v < n; v++)
+        if (arr[src][v] >= 0) // for all neighbors
+        {
+            // if v vertex is present in current path, then it's been already visited
+            bool visited = !(std::find(current_path.begin(), current_path.end(), v) == current_path.end());
 
-        if (arr[src][i] < 0) // not a neighbor of src
-            continue;
-
-
-        bool visited = !(std::find(current_path.begin(), current_path.end(), i) == current_path.end());
-        if (visited)
-            continue;
-
-        bfs(i, dest);
-
+            if (!visited)
+                traverse(v, dest);
     }
 
     current_path.pop_back();
@@ -65,12 +53,9 @@ void Graph::bfs(Graph::vertex src, Graph::vertex dest)
 
 std::vector<std::vector<Graph::vertex>> Graph::get_all_paths(Graph::vertex src, Graph::vertex dest)
 {
-    bfs(src, dest);
-
+    traverse(src, dest);
     current_path.clear();
 
-    auto result = paths;
-    paths.clear();
-
+    auto result = std::move(paths);
     return result;
 }

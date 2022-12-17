@@ -1,8 +1,6 @@
 #include "cell_array.h"
 #include "randomizer.h"
 
-#include <iostream>
-
 CellArray::CellArray(size_t n)
 {
     this->n = n;
@@ -27,7 +25,6 @@ bool CellArray::getRight(CellArray::vertex row, CellArray::vertex col)
 {
     if (row >= 0 && row < n && col >= 0 && col < n - 1)
     {
-        //std::cout << "Moze nie zero\n";
         size_t index = row * n + col;
         return cell_arr[index].right;
     }
