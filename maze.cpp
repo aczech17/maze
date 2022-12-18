@@ -1,8 +1,6 @@
 #include "maze.h"
 #include "randomizer.h"
 
-#include <iostream>
-
 void Maze::init()
 {
     for (vertex row = 0; row < n; row++)
@@ -12,11 +10,9 @@ void Maze::init()
 
             // left, right and down
 
-            //std::cout << row - 1 << " " << col << "\n";
             // LEFT -> THIS
             if (getRight(row, col - 1))
             {
-                //std::cout << "LEFT\n";
                 vertex left_index = index - 1;
                 double weight = 0.5 * (getValue(row - 1, col) + getValue(row, col));
 
@@ -24,13 +20,9 @@ void Maze::init()
                 add_edge(index, left_index, weight);
             }
 
-            //std::cout << row << " " << col << "\n";
-            //std::cout << getRight(row, col) << "\n\n";
-
             // THIS -> RIGHT
             if (getRight(row, col))
             {
-                //std::cout << "RIGHT\n";
                 vertex right_index = index + 1;
                 double weight = 0.5 * (getValue(row, col) + getValue(row, col + 1));
 
@@ -38,14 +30,12 @@ void Maze::init()
                 add_edge(index, right_index, weight);
             }
 
-            //std::cout << row << " " << col + 1 << "\n";
             // THIS
             //   |
             //   V
             // DOWN
             if (getDown(row, col))
             {
-                //std::cout << "DOWN\n";
                 vertex down_index = (row + 1) * (vertex)(n) + col;
                 double weight = 0.5 * (getValue(row, col) + getValue(row + 1, col));
 
@@ -56,13 +46,13 @@ void Maze::init()
 
     Randomizer randomizer;
     vertex start_row = 0;
-    vertex stop_row = (vertex)n - 1;
+    auto stop_row = static_cast<vertex>(n - 1);
 
-    vertex start_col = randomizer.get_int(0, n - 1);
-    vertex stop_col = randomizer.get_int(0, n - 1);
+    vertex start_col = randomizer.get_int(0, vertex(n - 1));
+    vertex stop_col = randomizer.get_int(0, vertex(n - 1));
 
-    start = start_row * n + start_col;
-    stop = stop_row * n + stop_col;
+    start = static_cast<vertex>(start_row * n + start_col);
+    stop = static_cast<vertex>(stop_row * n + stop_col);
 }
 
 CellArray::vertex Maze::get_start() const
