@@ -25,9 +25,16 @@ void print_shortest_path(Maze& maze)
 }
 
 
-int main()
+int main(int argc, char** argv)
 {
-    Maze maze(5);
+    if (argc < 2)
+    {
+        std::cerr << "Podaj wielkość labiryntu.\n";
+        return 1;
+    }
+    Graph::vertex n = static_cast<Graph::vertex>(std::stoi(argv[1]));
+    Maze maze(n);
+
     auto paths = maze.get_all_paths();
     if (paths.empty())
     {
