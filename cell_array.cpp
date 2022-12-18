@@ -12,8 +12,13 @@ CellArray::CellArray(size_t n)
             bool right, down;
             double value;
 
-            down = true;
-            right = true;
+            // IS IT OK? *********
+            do
+            {
+                down = randomizer.get_bool();
+                right = randomizer.get_bool();
+            }while(!down && !right);
+            // ********************
 
             value = randomizer.get_double(0, 10);
 

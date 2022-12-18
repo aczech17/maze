@@ -23,7 +23,7 @@ int main()
     });*/
 
 
-    Maze g(3);
+    Maze g(5);
     std::cout << "START: " << g.get_start() << " STOP: " << g.get_stop() << "\n";
 
     auto paths = g.get_all_paths();
