@@ -9,7 +9,6 @@
 class Maze :public CellArray, private Graph
 {
     using Graph::vertex;
-    size_t n;
 
     vertex start{};
     vertex stop{};
@@ -17,10 +16,11 @@ class Maze :public CellArray, private Graph
     void init();
     double get_path_length(std::vector<vertex>);
 public:
-    explicit Maze(size_t n) : n(n), CellArray(n), Graph(n * n) { init(); }
+    explicit Maze(vertex n) : CellArray(n), Graph(n * n) { init(); }
     vertex get_start() const;
     vertex get_stop() const;
     std::vector<std::pair<std::vector<vertex>, double>> get_all_paths();
+    std::pair<std::vector<vertex>, double> get_shortest_path_and_length();
 };
 
 

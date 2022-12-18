@@ -1,5 +1,6 @@
 #include "maze.h"
 #include "randomizer.h"
+#include <algorithm>
 
 void Maze::init()
 {
@@ -14,7 +15,7 @@ void Maze::init()
             if (getRight(row, col - 1))
             {
                 vertex left_index = index - 1;
-                double weight = 0.5 * (getValue(row - 1, col) + getValue(row, col));
+                double weight = 0.5 * (getValue(row, col - 1) + getValue(row, col));
 
                 // from this to left
                 add_edge(index, left_index, weight);
@@ -87,5 +88,21 @@ std::vector<std::pair<std::vector<Graph::vertex>, double>> Maze::get_all_paths()
         pairs.push_back(pair);
     }
     return pairs;
+}
+
+std::pair<std::vector<Graph::vertex>, double> Maze::get_shortest_path_and_length()
+{
+    typedef std::vector<Graph::vertex> path;
+
+    auto paths = get_all_paths();
+    auto shortest_path_and_length = std::min_element(paths.begin(), paths.end(),
+    [](const std::pair<path, double>& path1, const std::pair<path, double>& path2)
+    {
+       double length1 = path1.second;
+       double length2 = path2.second;
+       return length1 < length2;
+    });
+
+    return *shortest_path_and_length;
 }
 

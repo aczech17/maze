@@ -1,7 +1,9 @@
 #include "cell_array.h"
 #include "randomizer.h"
+#include <stdexcept>
+#include <string>
 
-CellArray::CellArray(size_t n)
+CellArray::CellArray(Graph::vertex n)
 {
     this->n = n;
 
@@ -13,14 +15,33 @@ CellArray::CellArray(size_t n)
             double value;
 
             // IS IT OK? *********
-            do
+            if (col == n - 1 && row == n - 1)
             {
-                down = randomizer.get_bool();
-                right = randomizer.get_bool();
-            }while(!down && !right);
+                right = false;
+                down = false;
+            }
+            else if (col == n - 1 && row < n - 1)
+            {
+                right = false;
+                down = true;
+            }
+            else if (col < n - 1 && row == n - 1)
+            {
+                right = true;
+                down = false;
+            }
+            else if (col < n - 1 && row < n - 1)
+            {
+                do
+                {
+                    down = randomizer.get_bool();
+                    right = randomizer.get_bool();
+                }while(!down && !right);
+            }
             // ********************
 
-            value = randomizer.get_double(0, 10);
+            const double EPS = std::numeric_limits<double>::min();
+            value = randomizer.get_double(EPS, 10 - EPS); // (0, 10) open
 
             cell_arr.emplace_back(right, down, value);
         }
@@ -48,6 +69,15 @@ bool CellArray::getDown(CellArray::vertex row, CellArray::vertex col)
 
 double CellArray::getValue(CellArray::vertex row, CellArray::vertex col)
 {
-    size_t index = row * n + col;
+    vertex index = row * vertex(n) + col;
+    if (index < 0 || index >= (vertex)cell_arr.size())
+    {
+        std::string error_msg = "Bad index: " + std::to_string(index) +
+                "\nrow = " + std::to_string(row) +
+                "\ncol = " + std::to_string(col);
+
+        throw std::out_of_range(error_msg);
+
+    }
     return cell_arr[index].value;
 }

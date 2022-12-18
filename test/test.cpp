@@ -1,8 +1,8 @@
 #include <iostream>
-#include "graph.h"
+#include "../graph.h"
 #include <algorithm>
 
-#include "maze.h"
+#include "../maze.h"
 
 void print_path(std::vector<Graph::vertex>& path)
 {
@@ -25,26 +25,34 @@ void print_shortest_path(Maze& maze)
 }
 
 
-int main()
+bool test(size_t n)
 {
-    Maze maze(5);
-    auto paths = maze.get_all_paths();
-    if (paths.empty())
+    for (size_t i = 0; i < n; i++)
     {
-        std::cout << "Nie ma dróg.\n";
-        return 0;
+        Maze maze(5);
+        auto paths = maze.get_all_paths();
+        if (paths.empty())
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+int main(int argc, char** argv)
+{
+    if (argc < 2)
+    {
+        std::cerr << "Podaj ilość przebiegów.\n";
+        return 1;
     }
 
-    std::cout << "Wszystkie trasy z " << maze.get_start() << " do " << maze.get_stop() << ":\n";
-    for (const auto& path: paths)
+    if (test(atoi(argv[1])))
     {
-        auto vertices = path.first;
-        double length = path.second;
-
-        print_path(vertices);
-        std::cout << length << "\n\n";
+        std::cout << "OK\n";
     }
+    else
+        std::cout << "FIAL!\n";
 
-    print_shortest_path(maze);
     return 0;
 }

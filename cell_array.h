@@ -20,11 +20,15 @@ private:
         {}
     };
 
-    size_t n;
+protected:
+    vertex n;
+
+private:
+
     std::vector<Cell> cell_arr;
 
 public:
-    explicit CellArray(size_t n);
+    explicit CellArray(vertex n);
     bool getRight(vertex row, vertex col);
     bool getDown(vertex row, vertex col);
     double getValue(vertex row, vertex col);

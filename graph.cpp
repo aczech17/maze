@@ -5,10 +5,10 @@
 
 Graph::Graph(size_t n)
 {
-    for (vertex row = 0; row < n; row++)
+    for (vertex row = 0; row < (vertex)n; row++)
     {
         std::vector<double> new_row;
-        for (vertex col = 0; col < n; col++)
+        for (vertex col = 0; col < (vertex)n; col++)
         {
             new_row.push_back(-1);
         }
@@ -33,12 +33,12 @@ size_t Graph::get_vertex_n() const
 
 void Graph::traverse(Graph::vertex src, Graph::vertex dest)
 {
-    size_t n = get_vertex_n();
+    auto n = static_cast<vertex>(get_vertex_n());
     current_path.push_back(src);
     if (src == dest)
         paths.push_back(current_path);
 
-    for (vertex v = 0; v < n; v++)
+    else for (vertex v = 0; v < n; v++)
         if (arr[src][v] >= 0) // for all neighbors
         {
             // if v vertex is present in current path, then it's been already visited
