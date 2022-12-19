@@ -42,7 +42,7 @@ int main(int argc, char** argv)
         return 0;
     }
 
-    std::cout << "Wszystkie trasy z " << maze.get_start() << " do " << maze.get_stop() << ":\n";
+    std::cout << "Wszystkie trasy z " << maze.get_start() << " do " << maze.get_stop() << ":\n\n";
     for (const auto& path: paths)
     {
         auto vertices = path.first;
