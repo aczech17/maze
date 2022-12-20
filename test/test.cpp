@@ -25,11 +25,11 @@ void print_shortest_path(Maze& maze)
 }
 
 
-bool test(size_t n)
+bool test(size_t n, Graph::vertex size)
 {
     for (size_t i = 0; i < n; i++)
     {
-        Maze maze(5);
+        Maze maze(size);
         auto paths = maze.get_all_paths();
         if (paths.empty())
         {
@@ -41,13 +41,13 @@ bool test(size_t n)
 
 int main(int argc, char** argv)
 {
-    if (argc < 2)
+    if (argc < 3)
     {
-        std::cerr << "Podaj ilość przebiegów.\n";
+        std::cerr << "Podaj ilość przebiegów i wielkość.\n";
         return 1;
     }
 
-    if (test(atoi(argv[1])))
+    if (test(atoi(argv[1]), atoi(argv[2])))
     {
         std::cout << "OK\n";
     }

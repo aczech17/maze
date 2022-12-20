@@ -54,7 +54,6 @@ void Graph::traverse(Graph::vertex src, Graph::vertex dest)
 std::vector<std::vector<Graph::vertex>> Graph::get_all_paths(Graph::vertex src, Graph::vertex dest)
 {
     traverse(src, dest);
-    current_path.clear();
 
     auto result = std::move(paths);
     return result;
