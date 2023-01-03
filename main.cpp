@@ -4,7 +4,7 @@
 
 #include "maze.h"
 
-void print_path(std::vector<Graph::vertex>& path)
+void print_path(const Graph::Path& path)
 {
     for (const auto& vertex: path)
     {
@@ -13,7 +13,7 @@ void print_path(std::vector<Graph::vertex>& path)
     std::cout << "\n";
 }
 
-void print_shortest_path(Maze& maze)
+void print_shortest_path(const Maze& maze)
 {
     auto shortest_path_and_length = maze.get_shortest_path_and_length();
     auto shortest_path = shortest_path_and_length.first;
