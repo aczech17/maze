@@ -21,7 +21,7 @@ void print_shortest_path(Maze& maze)
 
     std::cout << "\nNajkrótsza trasa:\n";
     print_path(shortest_path);
-    std::cout << "o długości " << shortest_length << "\n";
+    std::cout << "o długości " << shortest_length << ".\n";
 }
 
 

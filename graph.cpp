@@ -1,8 +1,6 @@
 #include "graph.h"
 #include <algorithm>
 
-#include <iostream>
-
 Graph::Graph(size_t n)
 {
     for (vertex row = 0; row < (vertex)n; row++)

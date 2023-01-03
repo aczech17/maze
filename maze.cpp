@@ -79,7 +79,7 @@ double Maze::get_path_length(std::vector<vertex> path)
 
 std::vector<std::pair<std::vector<Graph::vertex>, double>> Maze::get_all_paths()
 {
-    std::vector<std::pair<std::vector<Graph::vertex>, double>> pairs;
+    std::vector<std::pair<std::vector<Graph::vertex>, double>> pairs; // pairs (path, length_of_path)
 
     auto paths = Graph::get_all_paths(start, stop);
     for (const auto& path: paths)
@@ -95,8 +95,13 @@ std::pair<std::vector<Graph::vertex>, double> Maze::get_shortest_path_and_length
     typedef std::vector<Graph::vertex> path;
 
     auto paths = get_all_paths();
-    auto shortest_path_and_length = std::min_element(paths.begin(), paths.end(),
-    [](const std::pair<path, double>& path1, const std::pair<path, double>& path2)
+
+
+    auto shortest_path_and_length = std::min_element(
+            paths.begin(), paths.end(), // go through all the pairs
+
+            // Find the pair with the shortest length.
+    [](const std::pair<path, double>& path1, const std::pair<path, double>& path2) -> bool
     {
        double length1 = path1.second;
        double length2 = path2.second;
