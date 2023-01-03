@@ -66,7 +66,7 @@ CellArray::vertex Maze::get_stop() const
     return stop;
 }
 
-double Maze::get_path_length(std::vector<vertex> path) const
+double Maze::get_path_length(Graph::Path path) const
 {
     double sum = 0.0;
     for (auto v = path.begin(); v < path.end() - 1; v++)
@@ -77,7 +77,7 @@ double Maze::get_path_length(std::vector<vertex> path) const
 }
 
 
-std::vector<std::pair<std::vector<Graph::vertex>, double>> Maze::get_all_paths() const
+std::vector<std::pair<Graph::Path, double>> Maze::get_all_paths() const
 {
     std::vector<std::pair<std::vector<Graph::vertex>, double>> pairs; // pairs (Path, length_of_path)
 
@@ -90,7 +90,7 @@ std::vector<std::pair<std::vector<Graph::vertex>, double>> Maze::get_all_paths()
     return pairs;
 }
 
-std::pair<std::vector<Graph::vertex>, double> Maze::get_shortest_path_and_length() const
+std::pair<Graph::Path, double> Maze::get_shortest_path_and_length() const
 {
     typedef std::vector<Graph::vertex> path;
 
