@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <string>
 
-CellArray::CellArray(Graph::vertex n)
+CellArray::CellArray(Graph::Vertex n)
 {
     this->n = n;
 
@@ -47,7 +47,7 @@ CellArray::CellArray(Graph::vertex n)
         }
 }
 
-bool CellArray::getRight(CellArray::vertex row, CellArray::vertex col)
+bool CellArray::getRight(CellArray::vertex row, CellArray::vertex col) const
 {
     if (row >= 0 && row < n && col >= 0 && col < n - 1)
     {
@@ -57,7 +57,7 @@ bool CellArray::getRight(CellArray::vertex row, CellArray::vertex col)
     return false;
 }
 
-bool CellArray::getDown(CellArray::vertex row, CellArray::vertex col)
+bool CellArray::getDown(CellArray::vertex row, CellArray::vertex col) const
 {
     if (row >= 0 && row < n - 1 && col >= 0 && col < n)
     {
@@ -67,7 +67,7 @@ bool CellArray::getDown(CellArray::vertex row, CellArray::vertex col)
     return false;
 }
 
-double CellArray::getValue(CellArray::vertex row, CellArray::vertex col)
+double CellArray::getValue(CellArray::vertex row, CellArray::vertex col) const
 {
     vertex index = row * vertex(n) + col;
     if (index < 0 || index >= (vertex)cell_arr.size())

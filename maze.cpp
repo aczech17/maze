@@ -1,20 +1,23 @@
 #include "maze.h"
 #include "randomizer.h"
 #include <algorithm>
+#include <vector>
+
+#include <iostream>
 
 void Maze::init()
 {
-    for (vertex row = 0; row < n; row++)
-        for (vertex col = 0; col < n; col++)
+    for (Vertex row = 0; row < n; row++)
+        for (Vertex col = 0; col < n; col++)
         {
-            vertex index = row * (vertex)(n) + col;
+            Vertex index = row * (Vertex)(n) + col;
 
-            // left, right and down
+            // left, right, down and up
 
             // LEFT -> THIS
             if (getRight(row, col - 1))
             {
-                vertex left_index = index - 1;
+                Vertex left_index = index - 1;
                 double weight = 0.5 * (getValue(row, col - 1) + getValue(row, col));
 
                 // from this to left
@@ -24,7 +27,7 @@ void Maze::init()
             // THIS -> RIGHT
             if (getRight(row, col))
             {
-                vertex right_index = index + 1;
+                Vertex right_index = index + 1;
                 double weight = 0.5 * (getValue(row, col) + getValue(row, col + 1));
 
                 // from this to right
@@ -37,23 +40,37 @@ void Maze::init()
             // DOWN
             if (getDown(row, col))
             {
-                vertex down_index = (row + 1) * (vertex)(n) + col;
+                Vertex down_index = (row + 1) * (Vertex)(n) + col;
                 double weight = 0.5 * (getValue(row, col) + getValue(row + 1, col));
 
                 // from this to down
                 add_edge(index, down_index, weight);
             }
+
+            // UP
+            // A
+            // |
+            // THIS
+
+            if (getDown(row - 1, col))
+            {
+                Vertex up_index = (row - 1) * (Vertex)(n) + col;
+                double weight = 0.5 * (getValue(row, col) + getValue(row - 1, col));
+
+                // from this to up
+                add_edge(index, up_index, weight);
+            }
         }
 
     Randomizer randomizer;
-    vertex start_row = 0;
-    auto stop_row = static_cast<vertex>(n - 1);
+    Vertex start_row = 0;
+    auto stop_row = static_cast<Vertex>(n - 1);
 
-    vertex start_col = randomizer.get_int(0, vertex(n - 1));
-    vertex stop_col = randomizer.get_int(0, vertex(n - 1));
+    Vertex start_col = randomizer.get_int(0, Vertex(n - 1));
+    Vertex stop_col = randomizer.get_int(0, Vertex(n - 1));
 
-    start = static_cast<vertex>(start_row * n + start_col);
-    stop = static_cast<vertex>(stop_row * n + stop_col);
+    start = static_cast<Vertex>(start_row * n + start_col);
+    stop = static_cast<Vertex>(stop_row * n + stop_col);
 }
 
 CellArray::vertex Maze::get_start() const
@@ -79,7 +96,7 @@ double Maze::get_path_length(Graph::Path path) const
 
 std::vector<std::pair<Graph::Path, double>> Maze::get_all_paths() const
 {
-    std::vector<std::pair<std::vector<Graph::vertex>, double>> pairs; // pairs (Path, length_of_path)
+    std::vector<std::pair<std::vector<Graph::Vertex>, double>> pairs; // pairs (Path, length_of_path)
 
     auto paths = Graph::get_all_paths(start, stop);
     for (const auto& path: paths)
@@ -92,7 +109,7 @@ std::vector<std::pair<Graph::Path, double>> Maze::get_all_paths() const
 
 std::pair<Graph::Path, double> Maze::get_shortest_path_and_length() const
 {
-    typedef std::vector<Graph::vertex> path;
+    typedef std::vector<Graph::Vertex> path;
 
     auto paths = get_all_paths();
 
@@ -111,3 +128,27 @@ std::pair<Graph::Path, double> Maze::get_shortest_path_and_length() const
     return *shortest_path_and_length;
 }
 
+
+std::string Maze::draw() const
+{
+    std::string picture;
+    const wchar_t block = L'X'; // ?
+
+    for (auto row = 0; row < n; row++)
+    {
+        for (auto col = 0; col < n; col++)
+        {
+            if (getRight(row, col)) // this -> right
+            {
+                picture += std::to_string(row * n + col) + " -> " + std::to_string(row * n + col + 1) + "\n";
+            }
+
+            if (getDown(row, col)) // this -> down
+            {
+                picture += std::to_string(row * n + col) + " -> " + std::to_string((row + 1) * n + col) + "\n";
+            }
+        }
+    }
+
+    return picture;
+}

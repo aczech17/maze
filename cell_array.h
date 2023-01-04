@@ -7,7 +7,7 @@
 class CellArray
 {
 protected:
-    typedef Graph::vertex vertex;
+    typedef Graph::Vertex vertex;
 
 private:
     struct Cell
@@ -29,9 +29,9 @@ private:
 
 public:
     explicit CellArray(vertex n);
-    bool getRight(vertex row, vertex col);
-    bool getDown(vertex row, vertex col);
-    double getValue(vertex row, vertex col);
+    bool getRight(vertex row, vertex col) const;
+    bool getDown(vertex row, vertex col) const;
+    double getValue(vertex row, vertex col) const;
 };
 
 

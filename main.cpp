@@ -32,8 +32,11 @@ int main(int argc, char** argv)
         std::cerr << "Podaj wielkość labiryntu.\n";
         return 1;
     }
-    Graph::vertex n = static_cast<Graph::vertex>(std::stoi(argv[1]));
+    Graph::Vertex n = static_cast<Graph::Vertex>(std::stoi(argv[1]));
     Maze maze(n);
+
+    std::cout << maze.get_start() << " " << maze.get_stop()  << "\n";
+    std::cout << maze.draw();
 
     auto paths = maze.get_all_paths();
     if (paths.empty())
@@ -42,7 +45,7 @@ int main(int argc, char** argv)
         return 0;
     }
 
-    std::cout << "Wszystkie trasy z " << maze.get_start() << " do " << maze.get_stop() << ":\n\n";
+    std::cout << "\nWszystkie trasy z " << maze.get_start() << " do " << maze.get_stop() << ":\n\n";
     for (const auto& path: paths)
     {
         auto vertices = path.first;

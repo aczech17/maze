@@ -5,22 +5,24 @@
 #include "graph.h"
 #include "cell_array.h"
 #include <utility>
+#include <string>
 
 class Maze :public CellArray, private Graph
 {
-    using Graph::vertex;
+    using Graph::Vertex;
 
-    vertex start{};
-    vertex stop{};
+    Vertex start{};
+    Vertex stop{};
 
     void init();
     double get_path_length(Graph::Path) const;
 public:
-    explicit Maze(vertex n) : CellArray(n), Graph(n * n) { init(); }
-    vertex get_start() const;
-    vertex get_stop() const;
+    explicit Maze(Vertex n) : CellArray(n), Graph(n * n) { init(); }
+    Vertex get_start() const;
+    Vertex get_stop() const;
     std::vector<std::pair<Graph::Path, double>> get_all_paths() const;
     std::pair<Graph::Path, double> get_shortest_path_and_length() const;
+    std::string draw() const;
 };
 
 
