@@ -22,7 +22,7 @@ public:
     Vertex get_stop() const;
     std::vector<std::pair<Graph::Path, double>> get_all_paths() const;
     std::pair<Graph::Path, double> get_shortest_path_and_length() const;
-    std::string draw() const;
+    std::string get_all_crosings() const;
 };
 
 

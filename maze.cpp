@@ -129,7 +129,7 @@ std::pair<Graph::Path, double> Maze::get_shortest_path_and_length() const
 }
 
 
-std::string Maze::draw() const
+std::string Maze::get_all_crosings() const
 {
     std::string picture;
     const wchar_t block = L'X'; // ?

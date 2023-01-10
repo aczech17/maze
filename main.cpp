@@ -24,7 +24,6 @@ void print_shortest_path(const Maze& maze)
     std::cout << "o długości " << shortest_length << ".\n";
 }
 
-
 int main(int argc, char** argv)
 {
     if (argc < 2)
@@ -35,8 +34,11 @@ int main(int argc, char** argv)
     Graph::Vertex n = static_cast<Graph::Vertex>(std::stoi(argv[1]));
     Maze maze(n);
 
-    std::cout << maze.get_start() << " " << maze.get_stop()  << "\n";
-    std::cout << maze.draw();
+    std::cout << "Wszystkie przejścia między punktami labiryntu:\n";
+    std::cout << maze.get_all_crosings();
+
+    std::cout << "\nStart: " << maze.get_start();
+    std::cout << "\nStop: " << maze.get_stop() << "\n";
 
     auto paths = maze.get_all_paths();
     if (paths.empty())
